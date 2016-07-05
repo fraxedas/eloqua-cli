@@ -1,0 +1,46 @@
+{
+  "name": "eloqua-cli",
+  "version": "1.0.0",
+  "description": "Eloqua cli access via APIs",
+  "main": "index.js",
+  "author": "Oscar Fraxedas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fraxedas/eloqua-cli/issues"
+  },
+  "homepage": "https://github.com/fraxedas/eloqua-cli",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.9",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-coveralls": "^1.0.0",
+    "mocha": "^2.2.1",
+    "mocha-lcov-reporter": "^1.2.0",
+    "should": "^8.3.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec",
+    "publish-cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && grunt coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fraxedas/eloqua-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "eloqua",
+    "api",
+    "uac"
+  ],
+  "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "bin": {
+    "eloqua": "./index.js"
+  }
+}

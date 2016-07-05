@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- 5.6.0
+deploy:
+  provider: npm
+  email: fraxedas@gmail.com
+  api_key:
+    secure: DJB6eIK1yZk41Tv3jfev+guJHMfwTljT8wTZ3Px3TBKJDl6IG27Xacx3xtiUYyptkAQ5Wqvu1ciMs1PAOkSSPXMbC8F7x6fjrfJ08VznG9vBSoUkQIDBqDJCc351f9iFltx15WXL/K796BGsVLe6+KElhRpLrsEbXLTLrxRS2HFnWKf0nTGU5e8v/1Hi7x7ZuTTfuay8rcp7IDmbgdy17DyaYdViZlLbsioFCccJNankX7Et6g7M5L11f7yfNfVy5Vojnp9LIfiOYrSKvwn1sD5Sziao3DzdFkAaB/kYsBvDxDp9WAelkEE4gO1dqNYQjug/U/eCDToskz0NyAG4ycT1buJlbPSrPmUq3WHIl7x7K9F+aSU1gBc9jyQFT7L80iu80R/NvYzMbVS3AOeu/PbXW4oC6R+b633gukahVUENwJk9rSE8Sn1YLotL2WrQiKOzsJY1A8gvqnDLjdTj5o8h3A6KclgNRGPt36nBSxRQqRHWpGIYHzVd+Brx0xpiFPRoGosO1UUAZjFW0ZqkBGnljoY+cz5WAmk6+9JoCKJ2AP6qcoLoa/q3aICrLji/aK7n99A+kkCk9CGa3+zbPGPjTgZEdW6BotPz34NxLnh1Yh8gVm4/TR446yfXxdUr0Vjp+c3qmfgq4/dhA42pCn4QDxarJBCj7gqCTIc1ZgA=
+  on:
+    repo: fraxedas/eloqua-cli
+before_install:
+ - "npm install istanbul -g"
+ - "npm install mocha-cli -g"
+ - "npm install grunt-cli -g"
+script: "mocha"
+after_script: "npm run-script publish-cover"
