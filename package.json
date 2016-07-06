@@ -41,6 +41,6 @@
     "commander": "^2.9.0"
   },
   "bin": {
-    "eloqua": "./index.js"
+    "eloqua": "index.js"
   }
 }

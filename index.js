@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-console.log('Hello, world!');
-//var eloqua = require('./lib/eloqua');
 
-	
+process.title = 'eloqua';
+
+console.log("Hello world");
