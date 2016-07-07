@@ -1,13 +1,16 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
         jshint: {
+            options: {
+                esversion: 6
+            },
             files: ['bin/**/*.js', 'test/**/*.js']
         },
         watch: {
             files: ['bin/**/*.js', 'test/**/*.js'],
-            tasks : ['jshint']
+            tasks: ['jshint']
         },
         coveralls: {
             // Options relevant to all targets
@@ -26,14 +29,14 @@ module.exports = function(grunt) {
             }
         }
     });
-    
-    
+
+
 
     // Load the plugin that provides the "jshint" task.
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.loadNpmTasks('grunt-contrib-watch');
-    
+
     grunt.loadNpmTasks('grunt-coveralls');
 
     // Default task(s).

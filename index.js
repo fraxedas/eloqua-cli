@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var package = require('./package.json');
-var chalk = require('chalk');
 var program = require('commander');
 
 process.title = 'eloqua';

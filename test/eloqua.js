@@ -1,6 +1,6 @@
 /// <reference path="../typings/mocha/mocha.d.ts"/>
 var assert = require('assert');
-var eloqua = require('../lib/eloqua');
+var eloqua = require('../bin/eloqua-login');
 
 describe('Eloqua cli', function() {
 
