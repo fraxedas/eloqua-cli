@@ -42,6 +42,9 @@
     "commander": "^2.9.0"
   },
   "bin": {
-    "eloqua": "index.js"
+    "eloqua": "index.js",
+    "eloqua-login": "./bin/eloqua-login.js",
+    "eloqua-logout": "./bin/eloqua-logout.js",
+    "eloqua-app": "./bin/eloqua-app.js"
   }
 }

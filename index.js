@@ -1,19 +1,13 @@
 #!/usr/bin/env node
 
+var package = require('./package.json');
 var chalk = require('chalk');
-
-process.title = 'eloqua';
-
-console.error(chalk.red("Welcome to Eloqua"));
-
 var program = require('commander');
 
+process.title = 'eloqua';
 program
-    .arguments('<file>')
-    .option('-u, --username <username>', 'The user to authenticate as')
-    .option('-p, --password <password>', 'The user\'s password')
-    .action(function (file) {
-        console.log('user: %s pass: %s file: %s',
-            program.username, program.password, file);
-    })
+    .version(package.version)
+    .command('login', 'login into eloqua')
+    .command('logout', 'clear the credentials')
+    .command('app', 'app management', { isDefault: true })
     .parse(process.argv);

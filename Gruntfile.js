@@ -3,10 +3,10 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         jshint: {
-            files: ['lib/**/*.js', 'test/**/*.js']
+            files: ['bin/**/*.js', 'test/**/*.js']
         },
         watch: {
-            files: ['lib/**/*.js', 'test/**/*.js'],
+            files: ['bin/**/*.js', 'test/**/*.js'],
             tasks : ['jshint']
         },
         coveralls: {
