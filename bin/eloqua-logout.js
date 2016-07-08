@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 var program = require('commander');
+var eloqua = require("./eloqua");
 
-process.title = 'eloqua-app';
+process.title = 'eloqua-logout';
 program
-    .option('-l, --list', 'List installed apps')
-    .option('-a, --apps', 'List apps developed by you')
     .parse(process.argv);
+
+eloqua.logout();
