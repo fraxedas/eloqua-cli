@@ -3,6 +3,10 @@
 var program = require('commander');
 var co = require('co');
 var prompt = require('co-prompt');
+var storage = require('node-persist');
+storage.initSync();
+var request = require('superagent');
+var chalk = require('chalk');
 
 process.title = 'eloqua-login';
 program
@@ -28,5 +32,23 @@ else {
 }
 
 function login(company, username, password) {
-    console.log(company + "/" + username + ":" + password);
+    var raw = company + "\\" + username + ":" + password;
+    var encoded = new Buffer(raw).toString('base64');
+    var authorization = 'Basic ' + encoded;
+    request
+        .get('https://login.eloqua.com/id')
+        .set('Authorization', authorization)
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+            if (err) {
+                console.error(err);
+            }
+            else {
+                var eloqua = res.body;
+                eloqua.authorization = authorization;
+                eloqua.base = eloqua.urls.base;
+                storage.setItem('eloqua', eloqua);
+                console.log(chalk.green("Welcome back " + eloqua.user.displayName));
+            }
+        });
 }
