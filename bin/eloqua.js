@@ -47,15 +47,12 @@
             console.error(chalk.red("There is no active user. Please login."));
             return false;
         }
-
     };
 
-    eloqua.apps = function apps(index) {
+    eloqua.get = function get(url, next) {
         var credentials = storage.getItemSync('eloqua');
-        var offset = index || 0;
-        var limit = index ? 1 : 100;
         request
-            .get(credentials.base + '/api/cloud/1.0/apps/configurations?offset=' + offset + '&limit=' + limit)
+            .get(credentials.base + url)
             .set('Authorization', credentials.authorization)
             .set('Accept', 'application/json')
             .end(function (err, res) {
@@ -63,19 +60,27 @@
                     console.error(chalk.red(err));
                 }
                 else {
-                    var apps = res.body.items;
-                    for (var i = 0; i < apps.length; i++) {
-                        var app = apps[i];
-                        if (index) {
-                            console.log(app);
-                        }
-                        else {
-                            console.log(chalk.green("[" + i + "]" + app.name));
-                        }
-                    }
+                    //console.log(res.body);
+                    next(res.body);
                 }
             });
 
+    };
+
+    eloqua.apps = function apps() {
+        var credentials = storage.getItemSync('eloqua');
+        eloqua.get('/api/cloud/1.0/apps/configurations', function (result) {
+            for (var i = 0; i < result.count; i++) {
+                console.log(chalk.green("[" + i + "]" + result.items[i].name));
+            }
+        });
+    };
+
+    eloqua.app = function app(index) {
+        var credentials = storage.getItemSync('eloqua');
+        eloqua.get('/api/cloud/1.0/apps/configurations?offset=' + index + '&limit=1', function (result) {
+            console.log(chalk.green(JSON.stringify(result.items[0], null, 2)));
+        });
     };
 
     eloqua.installs = function apps() {

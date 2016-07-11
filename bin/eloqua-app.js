@@ -7,15 +7,18 @@ if(!eloqua.user()) return;
 
 process.title = 'eloqua-app';
 program
-    .option('-l, --list', 'list apps', {isDefault: true})
-    .option('-i, --index <index>', 'list installs')
+    .option('-l, --list', 'list apps')
+    .option('-i, --index <index>', 'display specific app')
     .parse(process.argv);
 
-if (program.list) {
+if (program.index) {
+    eloqua.app(program.index);
+}
+else if (program.list) {
     eloqua.apps();
 }
-if (program.index) {
-    eloqua.apps(program.index);
-}
+else{
+    eloqua.apps();
+} 
 
 
