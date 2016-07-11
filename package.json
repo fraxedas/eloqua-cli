@@ -47,6 +47,7 @@
   },
   "bin": {
     "eloqua": "index.js",
+    "eloqua-config": "./bin/eloqua-config.js",
     "eloqua-login": "./bin/eloqua-login.js",
     "eloqua-logout": "./bin/eloqua-logout.js",
     "eloqua-app": "./bin/eloqua-app.js"

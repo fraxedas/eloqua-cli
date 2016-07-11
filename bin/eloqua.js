@@ -49,6 +49,23 @@
         }
     };
 
+    eloqua.configure = function configure(env) {
+        var environment = {
+            name: env.name,
+            login: env.url
+        };
+        storage.setItemSync('eloqua-environment', environment);
+    };
+
+    eloqua.configuration = function configuration() {
+        var environment = storage.getItemSync('eloqua-environment');
+        return environment ||
+            {
+                name: 'prod',
+                login: 'https://login.eloqua.com'
+            };
+    };
+
     eloqua.get = function get(url, next) {
         var credentials = storage.getItemSync('eloqua');
         request
@@ -56,8 +73,8 @@
             .set('Authorization', credentials.authorization)
             .set('Accept', 'application/json')
             .end(function (err, res) {
-                if (err) {
-                    console.error(chalk.red(err));
+                if (err || res.body == "Not authenticated.") {
+                    console.error(chalk.red(err || res.body));
                 }
                 else {
                     //console.log(res.body);
