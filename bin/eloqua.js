@@ -5,11 +5,12 @@
     var chalk = require('chalk');
 
     eloqua.login = function login(company, username, password) {
+        var env = eloqua.environment();
         var raw = company + "\\" + username + ":" + password;
         var encoded = new Buffer(raw).toString('base64');
         var authorization = 'Basic ' + encoded;
         request
-            .get('https://login.eloqua.com/id')
+            .get(env.login + '/id')
             .set('Authorization', authorization)
             .set('Accept', 'application/json')
             .end(function (err, res) {
@@ -20,17 +21,18 @@
                     var credentials = res.body;
                     credentials.authorization = authorization;
                     credentials.base = credentials.urls.base;
-                    storage.setItemSync('eloqua', credentials);
+                    storage.setItemSync('eloqua.' + env.name, credentials);
                     console.log(chalk.green("Welcome back " + credentials.user.displayName));
                 }
             });
     };
 
     eloqua.logout = function logout() {
-        var credentials = storage.getItemSync('eloqua');
+        var environment = eloqua.environment();
+        var credentials = storage.getItemSync('eloqua.' + environment.name);
         if (credentials) {
-            console.log(chalk.green("Login out " + credentials.user.displayName));
-            storage.removeItemSync('eloqua');
+            console.log(chalk.green("Good bye " + credentials.user.displayName + " from " + environment.name));
+            storage.removeItemSync('eloqua.' + environment.name);
         }
         else {
             console.error(chalk.red("There is no active user"));
@@ -38,32 +40,38 @@
 
     };
 
+    eloqua.set_user = function user(user) {
+        var environment = eloqua.environment();
+        storage.setItemSync('eloqua.' + environment.name, user);
+    };
+
     eloqua.user = function user() {
-        var credentials = storage.getItemSync('eloqua');
+        var environment = eloqua.environment();
+        var credentials = storage.getItemSync('eloqua.' + environment.name);
         if (credentials) {
             return true;
         }
         else {
-            console.error(chalk.red("There is no active user. Please login."));
+            console.error(chalk.red("There is no active user on " + environment.name + ". Please login."));
             return false;
         }
     };
 
-    eloqua.configure = function configure(env) {
-        var environment = {
-            name: env.name,
-            login: env.url
-        };
-        storage.setItemSync('eloqua-environment', environment);
+    eloqua.set_environment = function set_environment(env) {
+        storage.setItemSync('eloqua-environment', env);
     };
 
-    eloqua.configuration = function configuration() {
+    eloqua.environment = function environment() {
         var environment = storage.getItemSync('eloqua-environment');
-        return environment ||
-            {
+        if (environment && environment.name) {
+            return environment;
+        }
+        else{
+            return {
                 name: 'prod',
                 login: 'https://login.eloqua.com'
             };
+        }   
     };
 
     eloqua.get = function get(url, next) {
