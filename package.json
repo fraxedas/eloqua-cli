@@ -43,7 +43,7 @@
     "co-prompt": "^1.0.0",
     "commander": "^2.9.0",
     "node-persist": "0.0.11",
-    "superagent": "^2.0.0"
+    "superagent": "^5.2.2"
   },
   "bin": {
     "eloqua": "index.js",
